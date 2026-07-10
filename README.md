@@ -1,36 +1,38 @@
-Velvet Vibe — Project Overview
+# Velvet Vibe — Project Overview
 
 Velvet Vibe is a modern web platform designed to deliver a seamless and immersive multimedia experience through a structured user system and responsive interface. The application focuses on performance, accessibility, and scalable architecture while providing users with personalized content interaction and account management features.
 
-🚀 Core Features
+## 🚀 Core Features
 
-- Authentication System
-  
-  - User registration
-  - Secure login
-  - Password recovery (forgot-password flow)
+* **Authentication System**
 
-- User Dashboard
-  
-  - Centralized hub for user activity
-  - Personalized experience based on user interactions
+  * User registration
+  * Secure login
+  * Password recovery (forgot-password flow)
 
-- Notification System
-  
-  - Real-time updates
-  - User alerts and system messages
+* **User Dashboard**
 
-- Watchlist
-  
-  - Save and manage preferred content
-  - Quick access to previously viewed or bookmarked items
+  * Centralized hub for user activity
+  * Personalized experience based on user interactions
 
-- Account Upgrade Module
-  
-  - Tier-based access system
-  - Supports feature unlocking and subscription handling
+* **Notification System**
 
-📁 Project Structure
+  * Real-time updates
+  * User alerts and system messages
+
+* **Watchlist**
+
+  * Save and manage preferred content
+  * Quick access to previously viewed or bookmarked items
+
+* **Account Upgrade Module**
+
+  * Tier-based access system
+  * Supports feature unlocking and subscription handling
+
+## 📁 Project Structure
+
+```
 /root/
 ├── /auth/
 │   ├── register/
@@ -51,32 +53,33 @@ Velvet Vibe is a modern web platform designed to deliver a seamless and immersiv
 │       └── index.html
 │
 └── index.html          # Landing / Homepage
+```
 
-- The "user" directory contains all user-facing pages and modules.
-- Each page is modularized for scalability and easy maintenance.
+* The `user` directory contains all user-facing pages and modules.
+* Each page is modularized for scalability and easy maintenance.
 
-🧱 Architecture
+## 🧱 Architecture
 
 Velvet Vibe follows a modular frontend structure with clearly separated concerns:
 
-- UI components are designed for reusability
-- Routing is structured for clean navigation
-- Authentication logic is isolated for security
-- State management ensures smooth user experience
+* UI components are designed for reusability
+* Routing is structured for clean navigation
+* Authentication logic is isolated for security
+* State management ensures smooth user experience
 
-🎯 Goals
+## 🎯 Goals
 
-- Deliver a fast and responsive user interface
-- Ensure secure and reliable authentication
-- Provide a scalable foundation for future enhancements
-- Maintain clean and maintainable code structure
+* Deliver a fast and responsive user interface
+* Ensure secure and reliable authentication
+* Provide a scalable foundation for future enhancements
+* Maintain clean and maintainable code structure
 
-🔮 Future Improvements
+## 🔮 Future Improvements
 
-- API integration for dynamic content
-- Enhanced user analytics
-- Mobile-first optimization
-- Performance tuning and caching strategies
+* API integration for dynamic content
+* Enhanced user analytics
+* Mobile-first optimization
+* Performance tuning and caching strategies
 
 ---
 
