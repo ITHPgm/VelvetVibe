@@ -1,0 +1,322 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Velvet Vibe | Forgot Password</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #f0eef7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 40px 20px;
+    }
+
+    /* Animated gradient background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(255, 59, 111, 0.15), transparent 70%),
+                  radial-gradient(circle at 80% 70%, rgba(255, 138, 92, 0.1), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .forgot-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .forgot-card {
+      background: rgba(15, 15, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 40px 36px;
+      border: 1px solid rgba(255, 59, 111, 0.35);
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 59, 111, 0.1) inset;
+    }
+
+    .logo-area {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff3b6f, #ff9a5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo i {
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: #ff3b6f;
+    }
+    .tagline {
+      text-align: center;
+      color: #b9b3e6;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.8rem;
+      margin: 20px 0 10px;
+    }
+    .description {
+      text-align: center;
+      color: #b9b3e6;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .input-group {
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: #ddd9ff;
+    }
+    .input-group i.icon {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      color: #ff3b6f;
+      font-size: 1.1rem;
+    }
+    .input-group input {
+      width: 100%;
+      background: rgba(25, 25, 35, 0.9);
+      border: 1px solid #2a2a36;
+      border-radius: 60px;
+      padding: 16px 20px 16px 48px;
+      font-size: 1rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.2s ease;
+    }
+    .input-group input:focus {
+      outline: none;
+      border-color: #ff3b6f;
+      box-shadow: 0 0 0 3px rgba(255, 59, 111, 0.2);
+      background: #1c1c26;
+    }
+    .input-group input::placeholder {
+      color: #6a6590;
+    }
+
+    .btn-reset {
+      width: 100%;
+      background: linear-gradient(95deg, #ff3b6f, #ff8a5c);
+      border: none;
+      padding: 16px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #0a0a0f;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(255, 59, 111, 0.3);
+      margin-bottom: 20px;
+    }
+    .btn-reset:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 28px rgba(255, 59, 111, 0.5);
+    }
+
+    .login-link {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #b9b3e6;
+    }
+    .login-link a {
+      color: #ff3b6f;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .message-box {
+      background: rgba(255, 59, 111, 0.2);
+      border-left: 4px solid #ff3b6f;
+      padding: 12px 16px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .message-box.success {
+      background: rgba(76, 175, 80, 0.2);
+      border-left-color: #4caf50;
+      color: #b9f6ca;
+    }
+    .message-box.show {
+      display: flex;
+    }
+
+    .disclaimer {
+      margin-top: 28px;
+      text-align: center;
+      font-size: 0.7rem;
+      color: #6a6590;
+      border-top: 1px solid #1e1e2a;
+      padding-top: 20px;
+    }
+    .disclaimer i {
+      margin-right: 4px;
+      color: #ff6f5e;
+    }
+
+    @media (max-width: 550px) {
+      .forgot-card {
+        padding: 30px 24px;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="forgot-wrapper">
+  <div class="forgot-card" data-aos="fade-up" data-aos-duration="1000">
+    <div class="logo-area" data-aos="zoom-in" data-aos-delay="150">
+      <div class="logo">
+        <i class="fas fa-crown"></i> VELVET VIBE
+      </div>
+      <div class="tagline">Recover your access</div>
+    </div>
+
+    <h2 data-aos="fade-up" data-aos-delay="200">Forgot Password?</h2>
+    <div class="description" data-aos="fade-up" data-aos-delay="250">
+      Enter your email address or username and we'll send you a link to reset your password.
+    </div>
+
+    <div id="messageBox" class="message-box" data-aos="fade-down" data-aos-delay="300">
+      <i class="fas fa-info-circle"></i> <span id="messageText"></span>
+    </div>
+
+    <form id="forgotForm">
+      <div class="input-group" data-aos="fade-right" data-aos-delay="350">
+        <label for="emailOrUsername">Email or Username</label>
+        <i class="icon fas fa-envelope"></i>
+        <input type="text" id="emailOrUsername" name="emailOrUsername" placeholder="your@email.com or @username" required>
+      </div>
+
+      <button type="submit" class="btn-reset" data-aos="zoom-in" data-aos-delay="450">
+        <i class="fas fa-paper-plane"></i> Send Reset Link
+      </button>
+    </form>
+
+    <div class="login-link" data-aos="fade-up" data-aos-delay="500">
+      <i class="fas fa-arrow-left"></i> <a href="../../auth/login/">Back to Sign In</a>
+    </div>
+
+    <div class="disclaimer" data-aos="fade-up" data-aos-delay="550">
+      <i class="fas fa-shield-alt"></i> We'll send a secure link to your registered email. This link expires in 1 hour.
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, offset: 30, duration: 800 });
+
+  const form = document.getElementById('forgotForm');
+  const messageBox = document.getElementById('messageBox');
+  const messageText = document.getElementById('messageText');
+
+  function showMessage(msg, isError = true) {
+    messageText.innerText = msg;
+    messageBox.classList.add('show');
+    if (!isError) {
+      messageBox.classList.add('success');
+    } else {
+      messageBox.classList.remove('success');
+    }
+    setTimeout(() => {
+      messageBox.classList.remove('show');
+    }, 5000);
+  }
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const input = document.getElementById('emailOrUsername').value.trim();
+
+    if (!input) {
+      showMessage('Please enter your email or username.');
+      return;
+    }
+
+    // Simple email validation if it looks like email
+    const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+    if (emailPattern.test(input)) {
+      // Email format valid
+      showMessage(`✅ Reset link sent to ${input}. Check your inbox (and spam folder).`, false);
+      form.reset();
+    } else {
+      // Treat as username (no strict validation)
+      showMessage(`✅ If "${input}" is registered, a reset link has been sent to your associated email.`, false);
+      form.reset();
+    }
+  });
+
+  // Back to login link simulation
+  document.querySelector('.login-link a').addEventListener('click', (e) => {
+    e.preventDefault();
+     window.location.href = "../../auth/login/";
+  });
+</script>
+</body>
+</html><!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  
+</body>
+
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Velvet Vibe | Dashboard</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #f0eef7;
+      overflow-x: hidden;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1e2a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff3b6f;
+      border-radius: 12px;
+    }
+
+    /* container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header / Navbar */
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 20px 0;
+      gap: 20px;
+      border-bottom: 1px solid rgba(255, 59, 111, 0.2);
+      margin-bottom: 30px;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff3b6f, #ff9a5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo i {
+      color: #ff3b6f;
+      background: none;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 59, 111, 0.1);
+      padding: 6px 16px 6px 12px;
+      border-radius: 60px;
+      border: 1px solid rgba(255, 59, 111, 0.3);
+    }
+    .user-profile img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ff3b6f;
+    }
+    .user-profile span {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .logout-btn {
+      background: transparent;
+      border: 1px solid #ff3b6f;
+      color: #ff3b6f;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .logout-btn:hover {
+      background: #ff3b6f;
+      color: #0a0a0f;
+    }
+
+    /* Search & filter row */
+    .search-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .search-box {
+      flex: 2;
+      min-width: 220px;
+      position: relative;
+    }
+    .search-box i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff3b6f;
+    }
+    .search-box input {
+      width: 100%;
+      background: rgba(25, 25, 35, 0.9);
+      border: 1px solid #2a2a36;
+      border-radius: 60px;
+      padding: 14px 20px 14px 48px;
+      font-size: 0.95rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: #ff3b6f;
+    }
+    .filter-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: #1a1a24;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      color: #ddd9ff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: #ff3b6f;
+      color: #0a0a0f;
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 40px 0 16px 0;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-title i {
+      color: #ff3b6f;
+      font-size: 1.6rem;
+    }
+    .section-sub {
+      color: #b9b3e6;
+      margin-bottom: 30px;
+    }
+
+    /* Cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 28px;
+      margin-bottom: 50px;
+    }
+    .content-card {
+      background: rgba(20, 20, 30, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 59, 111, 0.2);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+    .content-card:hover {
+      transform: translateY(-8px);
+      border-color: #ff3b6f;
+      box-shadow: 0 20px 35px rgba(255, 59, 111, 0.2);
+    }
+    .card-img {
+      position: relative;
+      height: 210px;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .content-card:hover .card-img img {
+      transform: scale(1.05);
+    }
+    .duration-badge {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .card-content {
+      padding: 18px;
+    }
+    .card-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: #b0aad4;
+      margin-bottom: 12px;
+    }
+    .views i, .likes i {
+      margin-right: 4px;
+    }
+    .likes {
+      color: #ff7a6e;
+    }
+    .btn-watch {
+      width: 100%;
+      background: linear-gradient(95deg, #ff3b6f, #ff8a5c);
+      border: none;
+      padding: 10px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #0a0a0f;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 8px;
+    }
+    .btn-watch:hover {
+      opacity: 0.9;
+      transform: scale(0.98);
+    }
+
+    /* Sidebar right column (for larger screens, but we use grid) – we'll add a top banner instead */
+    .featured-banner {
+      background: linear-gradient(135deg, #ff3b6f20, #ff8a5c20);
+      border-radius: 32px;
+      padding: 28px;
+      margin: 30px 0 20px;
+      border: 1px solid rgba(255, 59, 111, 0.4);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .banner-text h3 {
+      font-size: 1.5rem;
+    }
+    .banner-text p {
+      color: #cbc6ff;
+    }
+    .btn-vip {
+      background: #ff3b6f;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: bold;
+      color: #0a0a0f;
+      cursor: pointer;
+    }
+
+    /* footer */
+    footer {
+      margin-top: 60px;
+      border-top: 1px solid #1e1e2a;
+      padding: 30px 0 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #7a74a8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 16px;
+      }
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .section-title {
+        font-size: 1.5rem;
+        margin-top: 30px;
+      }
+      .cards-grid {
+        gap: 20px;
+      }
+      .filter-buttons {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        flex-wrap: nowrap;
+      }
+      .filter-btn {
+        white-space: nowrap;
+      }
+      .featured-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .card-content h3 {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="dashboard-header" data-aos="fade-down" data-aos-duration="800">
+    <div class="logo">
+      <i class="fas fa-crown"></i> VELVET VIBE
+    </div>
+    <div class="header-actions">
+      <div class="user-profile">
+        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User avatar">
+        <span>Alexandra M.</span>
+      </div>
+      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Exit</button>
+    </div>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="search-row" data-aos="fade-up" data-aos-duration="700">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Search videos, models, tags...">
+    </div>
+    <div class="filter-buttons" id="filterGroup">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="trending">Trending</button>
+      <button class="filter-btn" data-filter="vr">VR</button>
+      <button class="filter-btn" data-filter="exclusive">Exclusive</button>
+      <button class="filter-btn" data-filter="4k">4K UHD</button>
+    </div>
+  </div>
+
+  <!-- Dynamic content sections -->
+  <div id="dashboardContent">
+    <!-- Featured Banner -->
+    <div class="featured-banner" data-aos="zoom-in" data-aos-duration="900">
+      <div class="banner-text">
+        <h3><i class="fas fa-gem"></i> VIP Access Unlocked</h3>
+        <p>Watch full-length 4K scenes, behind-the-scenes, and interact with top models.</p>
+      </div>
+      <button class="btn-vip"><a href="/../../user/account-upgrade/" style="text-decoration: none; color: black;">Upgrade to VIP </a> <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <!-- For You Section -->
+    <div class="section-title" data-aos="fade-right">
+      <i class="fas fa-fire"></i> <span>Recommended for you</span>
+    </div>
+    <div class="cards-grid" id="forYouGrid">
+      <!-- dynamic cards will be injected here via JS but we also have static fallback? We'll generate with JS for consistency -->
+    </div>
+
+    <!-- Trending Now Section -->
+    <div class="section-title" data-aos="fade-right" data-aos-delay="100">
+      <i class="fas fa-chart-line"></i> <span>Trending Now</span>
+    </div>
+    <div class="cards-grid" id="trendingGrid"></div>
+
+    <!-- VR & Exclusive -->
+    <div class="section-title" data-aos="fade-right" data-aos-delay="200">
+      <i class="fas fa-vr-cardboard"></i> <span>VR & Immersive</span>
+    </div>
+    <div class="cards-grid" id="vrGrid"></div>
+  </div>
+
+  <footer data-aos="fade-up">
+    <p>© 2025 Velvet Vibe Entertainment — 18+ Only. All models are over 21.</p>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ once: true, offset: 50, duration: 800 });
+
+  // Dummy content database
+  const contentItems = [
+    { id: 1, title: "Midnight Seduction", category: "trending", quality: "4k", duration: "18:24", views: "245K", likes: "12.3K", img: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&h=350&fit=crop", type: "trending" },
+    { id: 2, title: "Velvet Dreams VR", category: "vr", quality: "vr", duration: "12:47", views: "98K", likes: "7.2K", img: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?w=500&h=350&fit=crop", type: "vr" },
+    { id: 3, title: "Forbidden Passion", category: "exclusive", quality: "4k", duration: "24:10", views: "512K", likes: "34K", img: "https://images.unsplash.com/photo-1524502397800-3b8cd9b0e9f7?w=500&h=350&fit=crop", type: "exclusive" },
+    { id: 4, title: "Neon Nights 4K", category: "4k", quality: "4k", duration: "32:05", views: "189K", likes: "15.1K", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500&h=350&fit=crop", type: "4k" },
+    { id: 5, title: "Desire Unleashed", category: "trending", quality: "hd", duration: "21:33", views: "332K", likes: "21K", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=350&fit=crop", type: "trending" },
+    { id: 6, title: "VR Paradise", category: "vr", quality: "vr", duration: "15:22", views: "76K", likes: "4.9K", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&h=350&fit=crop", type: "vr" },
+    { id: 7, title: "Exclusive: Temptation", category: "exclusive", quality: "4k", duration: "28:49", views: "401K", likes: "28K", img: "https://images.unsplash.com/photo-1503185912284-5271ff0b30e6?w=500&h=350&fit=crop", type: "exclusive" },
+    { id: 8, title: "Ultra HD Sensations", category: "4k", quality: "4k", duration: "19:14", views: "156K", likes: "11.3K", img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&h=350&fit=crop", type: "4k" },
+    { id: 9, title: "After Hours", category: "trending", quality: "hd", duration: "22:18", views: "278K", likes: "18.7K", img: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=500&h=350&fit=crop", type: "trending" },
+    { id: 10, title: "VR Fantasy Island", category: "vr", quality: "vr", duration: "20:05", views: "112K", likes: "8.2K", img: "https://images.unsplash.com/photo-1504215680859-0260c1a9271f?w=500&h=350&fit=crop", type: "vr" },
+    { id: 11, title: "VIP Exclusive: Silk", category: "exclusive", quality: "4k", duration: "34:12", views: "620K", likes: "47K", img: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&h=350&fit=crop", type: "exclusive" },
+    { id: 12, title: "Crimson 4K", category: "4k", quality: "4k", duration: "17:56", views: "204K", likes: "14.2K", img: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?w=500&h=350&fit=crop", type: "4k" }
+  ];
+
+  // Helper to render cards into a grid container
+  function renderCards(containerId, items) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    if (items.length === 0) {
+      container.innerHTML = `<div style="text-align:center; padding:40px;">No content found 😔</div>`;
+      return;
+    }
+    let html = '';
+    items.forEach(item => {
+      html += `
+        <div class="content-card" data-aos="fade-up" data-aos-duration="600">
+          <div class="card-img">
+            <img src="${item.img}" alt="${item.title}" loading="lazy">
+            <span class="duration-badge">${item.duration}</span>
+          </div>
+          <div class="card-content">
+            <h3>${item.title}</h3>
+            <div class="card-meta">
+              <span class="views"><i class="fas fa-eye"></i> ${item.views}</span>
+              <span class="likes"><i class="fas fa-heart"></i> ${item.likes}</span>
+            </div>
+            <button class="btn-watch" data-id="${item.id}"><i class="fas fa-play"></i> Watch now</button>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+    // attach event listeners to new buttons
+    document.querySelectorAll('.btn-watch').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = "../../user/watchlist/";
+      });
+    });
+  }
+
+  // Filter by categories
+  function filterContent(filterValue) {
+    let filtered = [...contentItems];
+    if (filterValue !== 'all') {
+      filtered = contentItems.filter(item => item.category === filterValue);
+    }
+    // For demonstration, we assign filtered items to the "Recommended" section, but we want separate sections? 
+    // For simplicity we update all three sections based on filter: For You = filtered, Trending = only trending from filter, VR = only VR from filter.
+    // Actually we want to show the dashboard with consistent sections. When filter changes, we re-render all sections based on filter.
+    // But we must keep sections meaningful: For You shows all filtered content, Trending shows items from filtered that are trending, etc.
+    // Let's map:
+    let allFiltered = filtered;
+    let trendingFiltered = allFiltered.filter(i => i.category === 'trending');
+    let vrFiltered = allFiltered.filter(i => i.category === 'vr');
+    // also we keep exclusive and 4k but not separate sections for them, just for you covers all filtered
+    renderCards('forYouGrid', allFiltered);
+    renderCards('trendingGrid', trendingFiltered);
+    renderCards('vrGrid', vrFiltered);
+  }
+
+  // initial load
+  filterContent('all');
+
+  // Add filter event listeners
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filterValue = btn.getAttribute('data-filter');
+      filterContent(filterValue);
+    });
+  });
+
+  // Search functionality (basic)
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.toLowerCase();
+    if (!query.trim()) {
+      filterContent(document.querySelector('.filter-btn.active').getAttribute('data-filter'));
+      return;
+    }
+    const allItems = [...contentItems];
+    const filteredSearch = allItems.filter(item => item.title.toLowerCase().includes(query));
+    // apply current category filter on top of search
+    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+    let final = filteredSearch;
+    if (activeFilter !== 'all') {
+      final = filteredSearch.filter(i => i.category === activeFilter);
+    }
+    // render sections accordingly (for you = all search results, trending = search results that are trending, vr = search results that are vr)
+    renderCards('forYouGrid', final);
+    renderCards('trendingGrid', final.filter(i => i.category === 'trending'));
+    renderCards('vrGrid', final.filter(i => i.category === 'vr'));
+  });
+
+  // Logout simulation
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    window.location.href = "../../auth/login/";
+  });
+
+  // refresh AOS after dynamic content loads (once)
+  setTimeout(() => AOS.refresh(), 200);
+</script>
+</body>
+</html>

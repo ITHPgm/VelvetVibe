@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Velvet Vibe | Exclusive Adult Entertainment</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #f0eef7;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1e1e2a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ff3b6f;
+      border-radius: 12px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff5c86;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    /* navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      flex-wrap: wrap;
+      gap: 20px;
+      border-bottom: 1px solid rgba(255, 59, 111, 0.2);
+      position: relative;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff3b6f, #ff9a5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 100;
+    }
+    .mobile-menu-toggle span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      margin: 5px 0;
+      background: #ddd9ff;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 6px);
+    }
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -6px);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #ddd9ff;
+      font-weight: 500;
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover {
+      color: #ff3b6f;
+    }
+    .btn-outline {
+      border: 1px solid #ff3b6f;
+      background: transparent;
+      padding: 8px 24px;
+      border-radius: 40px;
+      color: #ff3b6f;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .btn-outline:hover {
+      background: #ff3b6f;
+      color: #0a0a0f;
+      box-shadow: 0 0 12px rgba(255, 59, 111, 0.5);
+    }
+    .btn-primary {
+      background: linear-gradient(95deg, #ff3b6f, #ff8a5c);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: #0a0a0f;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(255, 59, 111, 0.3);
+    }
+    .btn-primary:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 28px rgba(255, 59, 111, 0.5);
+    }
+
+    /* hero */
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 70px 0 90px;
+      gap: 40px;
+    }
+    .hero-content {
+      flex: 1;
+      min-width: 280px;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(120deg, #fff, #ffb6c7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 20px;
+    }
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #b9b3e6;
+      margin-bottom: 32px;
+      line-height: 1.4;
+      max-width: 550px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 20px;
+    }
+    .stat span:first-child {
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: #ff3b6f;
+    }
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+    }
+    .hero-img {
+      width: 100%;
+      max-width: 460px;
+      border-radius: 32px;
+      box-shadow: 0 25px 40px -15px rgba(0,0,0,0.6);
+      transition: 0.3s;
+      border: 1px solid rgba(255, 59, 111, 0.3);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      letter-spacing: -0.3px;
+    }
+    .section-sub {
+      text-align: center;
+      color: #b9b3e6;
+      margin-bottom: 60px;
+      font-size: 1.1rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 35px;
+      margin-bottom: 80px;
+    }
+    .card {
+      background: rgba(20, 20, 30, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255, 59, 111, 0.2);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: #ff3b6f;
+      box-shadow: 0 25px 40px rgba(255, 59, 111, 0.2);
+    }
+    .card-img {
+      height: 230px;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    .card:hover .card-img img {
+      transform: scale(1.05);
+    }
+    .card-content {
+      padding: 24px;
+    }
+    .card-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+    .card-content p {
+      color: #b0aad4;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(255, 59, 111, 0.2);
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #ff8a7a;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      margin: 50px 0 80px;
+    }
+    .gallery-item {
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      transition: 0.4s;
+      display: block;
+    }
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #000000cc, transparent);
+      padding: 20px;
+      color: white;
+      font-weight: 600;
+      transform: translateY(0);
+      transition: 0.3s;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.03);
+    }
+    .gallery-item:hover .gallery-overlay {
+      background: linear-gradient(to top, #ff3b6fcc, transparent);
+    }
+
+    .membership {
+      background: linear-gradient(145deg, #12121c, #08080e);
+      border-radius: 48px;
+      padding: 60px 40px;
+      margin: 70px 0;
+      text-align: center;
+      border: 1px solid rgba(255, 59, 111, 0.3);
+    }
+    .membership h2 {
+      font-size: 2.3rem;
+      margin-bottom: 20px;
+    }
+    .perks {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      margin: 40px 0;
+    }
+    .perk-item {
+      flex: 1;
+      min-width: 180px;
+    }
+    .perk-item i {
+      font-size: 2.8rem;
+      color: #ff3b6f;
+      margin-bottom: 16px;
+    }
+
+    footer {
+      background: #030308;
+      border-top: 1px solid #20202a;
+      padding: 50px 0 30px;
+      margin-top: 60px;
+    }
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-col p {
+      color: #8e89b0;
+      max-width: 280px;
+    }
+    .footer-col h4 {
+      margin-bottom: 18px;
+      font-size: 1.2rem;
+    }
+    .footer-col a {
+      display: block;
+      color: #b1abdd;
+      text-decoration: none;
+      margin-bottom: 12px;
+      transition: 0.2s;
+    }
+    .footer-col a:hover {
+      color: #ff3b6f;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #1e1e2a;
+      font-size: 0.85rem;
+      color: #7a74a8;
+    }
+    .disclaimer {
+      background: rgba(255, 59, 111, 0.1);
+      padding: 12px;
+      border-radius: 40px;
+      text-align: center;
+      font-weight: 500;
+      font-size: 0.85rem;
+      margin-top: 20px;
+    }
+
+    /* ---------- MOBILE RESPONSIVE ---------- */
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .container {
+        padding: 0 20px;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .membership {
+        padding: 40px 20px;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+        padding: 20px 0 10px;
+        border-top: 1px solid rgba(255, 59, 111, 0.2);
+        order: 3;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 12px 5px;
+        font-size: 1.1rem;
+        border-bottom: 1px solid rgba(255, 59, 111, 0.1);
+        width: 100%;
+      }
+      .nav-links a:last-child {
+        border-bottom: none;
+      }
+
+      /* ---- FIXED BUTTON STYLES IN MOBILE MENU ---- */
+      .nav-links .btn-outline,
+      .nav-links .btn-primary {
+        display: block;                /* full‑width buttons */
+        text-align: center;
+        margin: 6px 0;                 /* vertical spacing */
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 1rem;
+        padding: 14px 0;              /* taller tap targets */
+        border-bottom: none !important; /* remove the separator line */
+        transition: background 0.3s, box-shadow 0.3s;
+      }
+
+      /* Sign In */
+      .nav-links .btn-outline {
+        background: transparent;
+        border: 1px solid #ff3b6f;
+        color: #ff3b6f;
+      }
+      .nav-links .btn-outline:hover {
+        background: #ff3b6f;
+        color: #0a0a0f;
+        box-shadow: 0 0 12px rgba(255, 59, 111, 0.5);
+      }
+
+      /* Join Now */
+      .nav-links .btn-primary {
+        background: linear-gradient(95deg, #ff3b6f, #ff8a5c);
+        border: none;
+        color: #0a0a0f;
+        box-shadow: 0 4px 12px rgba(255, 59, 111, 0.3);
+      }
+      .nav-links .btn-primary:hover {
+        transform: none; /* keep simple on mobile */
+        box-shadow: 0 8px 18px rgba(255, 59, 111, 0.45);
+      }
+
+      .navbar {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <div class="container">
+    <nav class="navbar">
+      <div class="logo" data-aos="fade-right" data-aos-duration="800">
+        <i class="fas fa-crown"></i> VELVET VIBE
+      </div>
+
+      <button class="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav-links" data-aos="fade-left" data-aos-duration="900">
+        <a href="#">Home</a>
+        <a href="#">Exclusive</a>
+        <a href="#">Models</a>
+        <a href="../user/account-upgrade/">VIP</a>
+        <a href="../auth/login/" class="btn-outline"><i class="fas fa-user-lock"></i> Sign In</a>
+        <a href="../auth/register/" class="btn-primary">Join Now</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- HERO SECTION with AOS multiple effects -->
+  <div class="container">
+    <div class="hero">
+      <div class="hero-content" data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-out">
+        <h1 data-aos="fade-right" data-aos-delay="200">Unlock <span style="color:#ff3b6f;">Desire</span><br>Beyond Boundaries</h1>
+        <p data-aos="fade-right" data-aos-delay="400">Premium adult entertainment crafted for true connoisseurs. HD videos, live cams, and exclusive content — immerse yourself.</p>
+        <div data-aos="zoom-in" data-aos-delay="600">
+          <button class="btn-primary" style="font-size: 1.1rem;"><i class="fas fa-gem"></i> <a href="../auth/register/" style="text-decoration: none; color: black;">Start Free Trial</a></button>
+        </div>
+        <div class="hero-stats" data-aos="flip-left" data-aos-delay="700">
+          <div class="stat"><span>1.2M+</span><br>Members</div>
+          <div class="stat"><span>3,500+</span><br>Exclusive Scenes</div>
+          <div class="stat"><span>4K/VR</span><br>Premium Quality</div>
+        </div>
+      </div>
+      <div class="hero-image" data-aos="fade-left" data-aos-duration="1200" data-aos-offset="200">
+        <img class="hero-img" src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=700&fit=crop&auto=format" alt="Elegant model portrait" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED CATEGORIES with DIFFERENT AOS EFFECTS -->
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Explore premium pleasures</h2>
+    <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Curated experiences, tailored for your deepest fantasies</p>
+    
+    <div class="cards-grid">
+      <div class="card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="0">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&h=350&fit=crop" alt="Sensual model">
+        </div>
+        <div class="card-content">
+          <span class="badge">🔥 Trending</span>
+          <h3>4K Exclusive Videos</h3>
+          <p>Unlimited streaming of ultra-HD scenes, updated daily with top performers.</p>
+          <i class="fas fa-play-circle" style="color:#ff3b6f;"></i> Watch now
+        </div>
+      </div>
+
+      <div class="card" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="150">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1524502397800-3b8cd9b0e9f7?w=500&h=350&fit=crop" alt="Live cam host">
+        </div>
+        <div class="card-content">
+          <span class="badge">🎥 Live 24/7</span>
+          <h3>Interactive Cams</h3>
+          <p>Connect with seductive models in real-time, tip, and direct private shows.</p>
+          <i class="fas fa-video" style="color:#ff3b6f;"></i> Join live room
+        </div>
+      </div>
+
+      <div class="card" data-aos="flip-left" data-aos-duration="900" data-aos-delay="300">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=350&fit=crop" alt="Luxury content">
+        </div>
+        <div class="card-content">
+          <span class="badge">✨ VIP only</span>
+          <h3>Velvet Originals</h3>
+          <p>Award-winning cinematic adult films with immersive storylines & passion.</p>
+          <i class="fas fa-ticket-alt"></i> Get access
+        </div>
+      </div>
+
+      <div class="card" data-aos="slide-up" data-aos-duration="800" data-aos-delay="450">
+        <div class="card-img">
+          <img src="https://images.unsplash.com/photo-1503185912284-5271ff0b30e6?w=500&h=350&fit=crop" alt="VR experience">
+        </div>
+        <div class="card-content">
+          <span class="badge">🕶️ Next Gen</span>
+          <h3>VR & Immersive</h3>
+          <p>Step into another dimension with VR content — feel every moment.</p>
+          <i class="fas fa-vr-cardboard"></i> Explore VR
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY SECTION - DIFFERENT AOS ANIMATIONS: FADE-UP-RIGHT, FADE-UP-LEFT, ZOOM-IN-UP -->
+  <div class="container">
+    <h2 class="section-title" data-aos="fade-up">Latest sensations</h2>
+    <p class="section-sub" data-aos="fade-up">Fresh releases & trending moments from our exclusive catalog</p>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item" data-aos="fade-up-right" data-aos-duration="700">
+        <img src="https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=500&h=400&fit=crop" alt="artistic sensual">
+        <div class="gallery-overlay">Midnight Desire · 1.2M views</div>
+      </div>
+      <div class="gallery-item" data-aos="zoom-in-up" data-aos-duration="800">
+        <img src="https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?w=500&h=400&fit=crop" alt="passion">
+        <div class="gallery-overlay">Forbidden Love · New</div>
+      </div>
+      <div class="gallery-item" data-aos="fade-up-left" data-aos-duration="700">
+        <img src="https://images.unsplash.com/photo-1524502397800-3b8cd9b0e9f7?w=500&h=400&fit=crop" alt="elegant">
+        <div class="gallery-overlay">Silk & Shadows · 4K HDR</div>
+      </div>
+      <div class="gallery-item" data-aos="flip-up" data-aos-duration="900">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=500&h=400&fit=crop" alt="romantic">
+        <div class="gallery-overlay">Velvet Room · VR Ready</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MEMBERSHIP & TESTIMONIAL (MULTIPLE AOS: SLIDE-RIGHT, SLIDE-LEFT, ZOOM) -->
+  <div class="container">
+    <div class="membership" data-aos="slide-right" data-aos-duration="1000" data-aos-offset="250">
+      <h2>Elevate to <span style="color:#ff3b6f;">Velvet Elite</span></h2>
+      <p style="max-width: 700px; margin: 0 auto;">Unlock unlimited access, exclusive behind-the-scenes, and priority support from our premium community.</p>
+      <div class="perks">
+        <div class="perk-item" data-aos="zoom-in" data-aos-delay="100" data-aos-duration="600">
+          <i class="fas fa-infinity"></i>
+          <h4>Unlimited Streaming</h4>
+        </div>
+        <div class="perk-item" data-aos="zoom-in" data-aos-delay="250" data-aos-duration="600">
+          <i class="fas fa-crown"></i>
+          <h4>Early Access</h4>
+        </div>
+        <div class="perk-item" data-aos="zoom-in" data-aos-delay="400" data-aos-duration="600">
+          <i class="fas fa-champagne-glasses"></i>
+          <h4>Private Events</h4>
+        </div>
+      </div>
+      <button class="btn-primary" style="font-size:1rem; padding:14px 40px;" data-aos="fade-up" data-aos-delay="500"><a href="/AdultC/auth/register/" style="text-decoration: none; color: black;">Become a Member</a> <i class="fas fa-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <!-- Testimonial block with slide-left effect -->
+  <div class="container">
+    <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: center; margin: 40px 0 20px;">
+      <div style="flex: 1; min-width: 260px;" data-aos="slide-right" data-aos-duration="800">
+        <i class="fas fa-quote-left" style="font-size: 3rem; color: #ff3b6f; opacity: 0.7;"></i>
+        <p style="font-size: 1.4rem; font-weight: 500; margin: 20px 0;">"Absolutely stunning platform. The quality and variety is unmatched — Velvet Vibe redefines adult entertainment."</p>
+        <h4>— Mia C., Platinum Member</h4>
+        <div><i class="fas fa-star" style="color: gold;"></i><i class="fas fa-star" style="color: gold;"></i><i class="fas fa-star" style="color: gold;"></i><i class="fas fa-star" style="color: gold;"></i><i class="fas fa-star" style="color: gold;"></i></div>
+      </div>
+      <div style="flex: 1; min-width: 260px;" data-aos="slide-left" data-aos-duration="800" data-aos-delay="200">
+        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop" style="border-radius: 50%; width: 120px; height: 120px; object-fit: cover; border: 3px solid #ff3b6f;" alt="testimonial face">
+        <p style="margin-top: 20px;"><strong>Luxury experience</strong> – the VR section blew my mind. Totally worth every cent.</p>
+        <span>— David R.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER + 18+ disclaimer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="600">
+          <h3 class="logo" style="font-size:1.7rem;">VELVET VIBE</h3>
+          <p>Where fantasy meets premium quality. 18+ only. Verified secure platform.</p>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+          <h4>Discover</h4>
+          <a href="#">Categories</a>
+          <a href="#">VR World</a>
+          <a href="#">Models</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+          <h4>Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Privacy & Terms</a>
+          <a href="#">DMCA</a>
+          <a href="#">Age verification</a>
+        </div>
+        <div class="footer-col" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+          <h4>Connect</h4>
+          <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+          <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="#"><i class="fab fa-discord"></i> Discord</a>
+        </div>
+      </div>
+      <div class="disclaimer" data-aos="zoom-out" data-aos-duration="800">
+        <i class="fas fa-exclamation-triangle"></i> This website contains adult content. You must be 18 years or older to enter. All models are over 21. By continuing, you agree to our terms.
+      </div>
+      <div class="copyright">
+        © 2025 Velvet Vibe Entertainment. All rights reserved. Indulge responsibly.
+      </div>
+    </div>
+  </footer> 
+
+  <!-- AOS JS + initialization -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      once: true,
+      offset: 100,
+      duration: 800,
+      easing: 'ease-out-cubic',
+      mirror: false,
+      disable: false,
+    });
+    window.addEventListener('load', () => {
+      AOS.refresh();
+    });
+  </script>
+
+  <!-- MOBILE MENU TOGGLE SCRIPT -->
+  <script>
+    const toggleBtn = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    toggleBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      toggleBtn.classList.toggle('active');
+      const isExpanded = navLinks.classList.contains('active');
+      toggleBtn.setAttribute('aria-expanded', isExpanded);
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        toggleBtn.classList.remove('active');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Velvet Vibe | My Watchlist</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+      width: 100%;
+    }
+
+    /* Fixed header */
+    .watchlist-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(15px);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 59, 111, 0.3);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff3b6f, #ff9a5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+    .logo i {
+      background: none;
+      background-clip: unset;
+      color: #ff3b6f;
+      margin-right: 4px;
+    }
+
+    .header-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: rgba(255,59,111,0.2);
+      padding: 6px 16px;
+      border-radius: 40px;
+    }
+
+    /* Feed container */
+    .feed-container {
+      position: relative;
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-behavior: smooth;
+      /* offset for header */
+      scroll-padding-top: 0;
+    }
+
+    /* Each video item */
+    .video-item {
+      scroll-snap-align: start;
+      height: 100vh;
+      width: 100%;
+      position: relative;
+      background: #0a0a0f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Video element */
+    .video-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    /* Dark overlay for better text contrast */
+    .video-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+      z-index: 2;
+      padding: 80px 20px 30px 20px;
+      pointer-events: none;
+    }
+
+    /* Content on top of video */
+    .video-info {
+      position: absolute;
+      bottom: 100px;
+      left: 20px;
+      right: 80px;
+      z-index: 3;
+      color: white;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      pointer-events: none;
+    }
+
+    .video-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .video-info p {
+      font-size: 0.85rem;
+      opacity: 0.9;
+      display: -webkit-box;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Right action buttons */
+    .action-buttons {
+      position: absolute;
+      right: 12px;
+      bottom: 120px;
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      pointer-events: auto;
+    }
+
+    .action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .action-btn span {
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .action-btn:active {
+      transform: scale(0.92);
+    }
+
+    .like-btn.liked {
+      color: #ff3b6f;
+    }
+
+    .save-btn.saved {
+      color: #ff9a5f;
+    }
+
+    /* Unmute indicator */
+    .unmute-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 5;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+      cursor: pointer;
+      pointer-events: auto;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Empty state */
+    .empty-state {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: #0a0a0f;
+      color: #aaa;
+      padding: 20px;
+    }
+    .empty-state i {
+      font-size: 4rem;
+      color: #ff3b6f;
+      margin-bottom: 20px;
+    }
+    .empty-state p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+    .explore-btn {
+      background: linear-gradient(95deg, #ff3b6f, #ff8a5c);
+      border: none;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #0a0a0f;
+      cursor: pointer;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .feed-container::-webkit-scrollbar {
+      display: none;
+    }
+    .feed-container {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    @media (max-width: 600px) {
+      .action-buttons {
+        right: 8px;
+        gap: 22px;
+      }
+      .action-btn {
+        font-size: 1.4rem;
+      }
+      .video-info {
+        bottom: 90px;
+        left: 12px;
+        right: 70px;
+      }
+      .video-info h3 {
+        font-size: 1rem;
+      }
+      .unmute-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        bottom: 15px;
+        right: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="watchlist-header">
+  <div class="header-left">
+    <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+    <div class="logo"><i class="fas fa-crown"></i> VELVET VIBE</div>
+  </div>
+  <div class="header-title"><i class="fas fa-bookmark"></i> My Watchlist</div>
+</div>
+
+<div id="feedContainer" class="feed-container">
+  <!-- videos will be injected here dynamically -->
+</div>
+
+<script>
+  // Sample video data – these are public sample videos (non-adult, but demonstrate functionality)
+  // In a real app, these would be user-saved adult videos.
+  const sampleVideos = [
+    {
+      id: 1,
+      title: "Midnight Seduction",
+      description: "A passionate encounter under the moonlight. 🔥 Full HD",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      likes: 1243,
+      comments: 89,
+      saved: true,  // true because it's in watchlist
+      type: "exclusive"
+    },
+    {
+      id: 2,
+      title: "Velvet Dreams VR",
+      description: "Immersive VR experience – feel every moment. #VR #4K",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+      likes: 2891,
+      comments: 201,
+      saved: true,
+      type: "vr"
+    },
+    {
+      id: 3,
+      title: "Forbidden Passion",
+      description: "Intense chemistry you won't forget. ⚡ Exclusive scene",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+      likes: 5432,
+      comments: 478,
+      saved: true,
+      type: "exclusive"
+    },
+    {
+      id: 4,
+      title: "Neon Nights 4K",
+      description: "Vibrant colors, raw desire. Ultra HD experience.",
+      videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+      likes: 3987,
+      comments: 312,
+      saved: true,
+      type: "4k"
+    }
+  ];
+
+  // In a real app, you'd load from localStorage or API. We'll use a mutable array.
+  let watchlistVideos = [...sampleVideos];
+
+  // Helper to render the feed
+  function renderWatchlist() {
+    const container = document.getElementById('feedContainer');
+    if (!container) return;
+
+    if (watchlistVideos.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-bookmark"></i>
+          <p>Your watchlist is empty</p>
+          <button class="explore-btn" id="exploreBtn">Explore Videos <i class="fas fa-arrow-right"></i></button>
+        </div>
+      `;
+      const exploreBtn = document.getElementById('exploreBtn');
+      if (exploreBtn) {
+        exploreBtn.addEventListener('click', () => {
+          alert('Redirect to explore page (dashboard) – in a real app, you would navigate.');
+          // window.location.href = "dashboard.html";
+        });
+      }
+      return;
+    }
+
+    // Build HTML for each video
+    let html = '';
+    watchlistVideos.forEach((video, index) => {
+      html += `
+        <div class="video-item" data-id="${video.id}" data-index="${index}">
+          <video 
+            src="${video.videoUrl}" 
+            muted 
+            playsinline 
+            loop 
+            preload="metadata"
+            class="video-element"
+          ></video>
+          <div class="video-overlay"></div>
+          <div class="video-info">
+            <h3>${escapeHtml(video.title)}</h3>
+            <p>${escapeHtml(video.description)}</p>
+          </div>
+          <div class="action-buttons">
+            <button class="action-btn like-btn" data-id="${video.id}">
+              <i class="fas fa-heart"></i>
+              <span id="like-count-${video.id}">${formatNumber(video.likes)}</span>
+            </button>
+            <button class="action-btn comment-btn" data-id="${video.id}">
+              <i class="fas fa-comment"></i>
+              <span>${formatNumber(video.comments)}</span>
+            </button>
+            <button class="action-btn share-btn" data-id="${video.id}">
+              <i class="fas fa-share"></i>
+              <span>Share</span>
+            </button>
+            <button class="action-btn save-btn saved" data-id="${video.id}">
+              <i class="fas fa-bookmark"></i>
+              <span>Saved</span>
+            </button>
+          </div>
+          <button class="unmute-btn" data-id="${video.id}">
+            <i class="fas fa-volume-mute"></i>
+          </button>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+
+    // After rendering, set up intersection observer to play/pause videos
+    setupIntersectionObserver();
+    // Attach event listeners for buttons
+    attachButtonEvents();
+    // Attach unmute handlers
+    attachUnmuteHandlers();
+  }
+
+  // Helper to escape HTML
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  function formatNumber(num) {
+    if (num >= 1000000) return (num/1000000).toFixed(1) + 'M';
+    if (num >= 1000) return (num/1000).toFixed(1) + 'K';
+    return num.toString();
+  }
+
+  // Intersection Observer to autoplay visible videos
+  let observer = null;
+  function setupIntersectionObserver() {
+    if (observer) observer.disconnect();
+
+    const videoItems = document.querySelectorAll('.video-item');
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target.querySelector('video');
+        if (!video) return;
+        if (entry.isIntersecting) {
+          video.play().catch(e => console.log('Autoplay prevented:', e));
+          // Also mute if not already (but muted by default)
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.6 }); // play when 60% visible
+
+    videoItems.forEach(item => observer.observe(item));
+  }
+
+  // Attach like, comment, share, save events
+  function attachButtonEvents() {
+    // Like buttons
+    document.querySelectorAll('.like-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const videoId = parseInt(btn.dataset.id);
+        const video = watchlistVideos.find(v => v.id === videoId);
+        if (video) {
+          // Toggle like state (we simulate like/unlike, but we don't store persistent state for this demo)
+          // For simplicity we'll just increment/decrement like count in UI.
+          const likeSpan = document.getElementById(`like-count-${videoId}`);
+          let currentLikes = video.likes;
+          if (btn.classList.contains('liked')) {
+            btn.classList.remove('liked');
+            currentLikes--;
+            video.likes = currentLikes;
+          } else {
+            btn.classList.add('liked');
+            currentLikes++;
+            video.likes = currentLikes;
+          }
+          likeSpan.innerText = formatNumber(currentLikes);
+        }
+      });
+    });
+
+    // Comment buttons
+    document.querySelectorAll('.comment-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const videoId = parseInt(btn.dataset.id);
+        
+      });
+    });
+
+    // Share buttons
+    document.querySelectorAll('.share-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        alert(`🔗 Share this video link with friends! (Demo)`);
+      });
+    });
+
+    // Save (remove from watchlist) buttons
+    document.querySelectorAll('.save-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const videoId = parseInt(btn.dataset.id);
+        // Remove video from watchlist array
+        const index = watchlistVideos.findIndex(v => v.id === videoId);
+        if (index !== -1) {
+          watchlistVideos.splice(index, 1);
+          // Re-render entire feed
+          renderWatchlist();
+        }
+      });
+    });
+  }
+
+  // Unmute/mute toggles
+  function attachUnmuteHandlers() {
+    document.querySelectorAll('.unmute-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const videoItem = btn.closest('.video-item');
+        const video = videoItem.querySelector('video');
+        if (video.muted) {
+          video.muted = false;
+          btn.innerHTML = '<i class="fas fa-volume-up"></i>';
+        } else {
+          video.muted = true;
+          btn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        }
+      });
+    });
+  }
+
+  // Back button behavior
+  document.getElementById('backBtn').addEventListener('click', () => {
+    location.href = '/../../user/dashboard/'
+  
+  });
+
+  // Initial render
+  renderWatchlist();
+
+  // Optional: ensure videos that are already visible start playing after render
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const firstVideo = document.querySelector('.video-item video');
+      if (firstVideo && firstVideo.play) {
+        firstVideo.play().catch(e => console.log('autoplay blocked'));
+      }
+    }, 500);
+  });
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>

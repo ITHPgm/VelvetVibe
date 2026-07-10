@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Velvet Vibe | Notifications</title>
+  <!-- Google Fonts + Font Awesome 6 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #f0eef7;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255, 59, 111, 0.2);
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      color: #ff3b6f;
+      font-size: 1.4rem;
+      cursor: pointer;
+      transition: 0.2s;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .back-btn:hover {
+      background: rgba(255, 59, 111, 0.2);
+    }
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ff3b6f, #ff9a5f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo i {
+      background: none;
+      background-clip: unset;
+      -webkit-background-clip: unset;
+      color: #ff3b6f;
+    }
+    .mark-all-btn {
+      background: rgba(255, 59, 111, 0.2);
+      border: 1px solid #ff3b6f;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ff3b6f;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .mark-all-btn:hover {
+      background: #ff3b6f;
+      color: #0a0a0f;
+    }
+
+    /* Filter tabs */
+    .filter-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #2a2a36;
+      padding-bottom: 12px;
+    }
+    .filter-btn {
+      background: none;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #b9b3e6;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .filter-btn.active {
+      background: #ff3b6f;
+      color: #0a0a0f;
+    }
+    .filter-btn:hover:not(.active) {
+      background: rgba(255, 59, 111, 0.2);
+    }
+
+    /* Notifications list */
+    .notifications-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 50px;
+    }
+    .notification-item {
+      background: rgba(20, 20, 30, 0.6);
+      backdrop-filter: blur(8px);
+      border-radius: 24px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      border: 1px solid rgba(255, 59, 111, 0.2);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .notification-item.unread {
+      background: rgba(255, 59, 111, 0.1);
+      border-left: 4px solid #ff3b6f;
+    }
+    .notification-item.read {
+      opacity: 0.7;
+    }
+    .notification-item:hover {
+      transform: translateX(4px);
+      border-color: #ff3b6f;
+    }
+    .notif-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 59, 111, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      color: #ff3b6f;
+      flex-shrink: 0;
+    }
+    .notif-content {
+      flex: 1;
+    }
+    .notif-content p {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .notif-time {
+      font-size: 0.7rem;
+      color: #9a94c0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .mark-read-btn {
+      background: none;
+      border: none;
+      color: #ff7a5c;
+      font-size: 0.7rem;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .mark-read-btn:hover {
+      text-decoration: underline;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #9a94c0;
+    }
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: #ff3b6f;
+    }
+
+    @media (max-width: 550px) {
+      .container {
+        padding: 0 16px;
+      }
+      .notification-item {
+        padding: 14px;
+      }
+      .notif-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .notif-content p {
+        font-size: 0.85rem;
+      }
+      .filter-tabs {
+        gap: 8px;
+      }
+      .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.85rem;
+      }
+      .mark-all-btn {
+        padding: 6px 14px;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="notif-header" data-aos="fade-down">
+      <div class="logo-area">
+        <button class="back-btn" id="backBtn"><i class="fas fa-arrow-left"></i></button>
+        <div class="logo"><i class="fas fa-crown"></i> VELVET VIBE</div>
+      </div>
+      <button class="mark-all-btn" id="markAllBtn"><i class="fas fa-check-double"></i> Mark all as read</button>
+    </div>
+
+    <div class="filter-tabs" data-aos="fade-up">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="unread">Unread</button>
+      <button class="filter-btn" data-filter="read">Read</button>
+    </div>
+
+    <div id="notificationsContainer" class="notifications-list">
+      <!-- Notifications will be injected here -->
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, offset: 50, duration: 700 });
+
+    // Mock notification data
+    let notifications = [
+      {
+        id: 1,
+        type: 'like',
+        message: 'Jessica M. liked your video "Midnight Seduction"',
+        time: '2 minutes ago',
+        read: false,
+        icon: 'fas fa-heart'
+      },
+      {
+        id: 2,
+        type: 'comment',
+        message: 'David R. commented: "🔥 Absolutely stunning! Can’t wait for more."',
+        time: '1 hour ago',
+        read: false,
+        icon: 'fas fa-comment'
+      },
+      {
+        id: 3,
+        type: 'vip',
+        message: '🎉 VIP Exclusive: New VR scene "Paradise Cove" just dropped!',
+        time: '3 hours ago',
+        read: false,
+        icon: 'fas fa-gem'
+      },
+      {
+        id: 4,
+        type: 'follow',
+        message: 'Sofia L. started following you.',
+        time: 'Yesterday',
+        read: true,
+        icon: 'fas fa-user-plus'
+      },
+      {
+        id: 5,
+        type: 'system',
+        message: 'Your account has been upgraded to VIP! Enjoy unlimited access.',
+        time: '2 days ago',
+        read: true,
+        icon: 'fas fa-crown'
+      },
+      {
+        id: 6,
+        type: 'content',
+        message: 'New 4K video "Neon Temptation" is now available in your feed.',
+        time: '3 days ago',
+        read: true,
+        icon: 'fas fa-video'
+      },
+      {
+        id: 7,
+        type: 'like',
+        message: 'Alex R. liked your video "Forbidden Passion".',
+        time: '5 days ago',
+        read: true,
+        icon: 'fas fa-heart'
+      }
+    ];
+
+    // Helper: format relative time could be improved, but we keep as is.
+    function renderNotifications(filter = 'all') {
+      const container = document.getElementById('notificationsContainer');
+      let filtered = [...notifications];
+      
+      if (filter === 'unread') {
+        filtered = notifications.filter(n => !n.read);
+      } else if (filter === 'read') {
+        filtered = notifications.filter(n => n.read);
+      }
+      
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" data-aos="fade-up">
+            <i class="fas fa-bell-slash"></i>
+            <p>No notifications in this category</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = filtered.map(notif => `
+        <div class="notification-item ${notif.read ? 'read' : 'unread'}" data-id="${notif.id}" data-aos="fade-up" data-aos-duration="500">
+          <div class="notif-icon"><i class="${notif.icon}"></i></div>
+          <div class="notif-content">
+            <p>${notif.message}</p>
+            <div class="notif-time">
+              <span><i class="far fa-clock"></i> ${notif.time}</span>
+              ${!notif.read ? `<button class="mark-read-btn" data-id="${notif.id}">Mark as read</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      // Attach mark-as-read events to buttons
+      document.querySelectorAll('.mark-read-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = parseInt(btn.dataset.id);
+          markAsRead(id);
+        });
+      });
+      
+      // Also clicking on the whole item can mark as read (optional)
+      document.querySelectorAll('.notification-item.unread').forEach(item => {
+        item.addEventListener('click', (e) => {
+          // Prevent if the click was on the button itself (already handled)
+          if (e.target.classList.contains('mark-read-btn')) return;
+          const id = parseInt(item.dataset.id);
+          markAsRead(id);
+        });
+      });
+    }
+    
+    function markAsRead(id) {
+      const notification = notifications.find(n => n.id === id);
+      if (notification && !notification.read) {
+        notification.read = true;
+        // Re-render with current filter
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        renderNotifications(activeFilter);
+      }
+    }
+    
+    function markAllAsRead() {
+      let changed = false;
+      notifications.forEach(n => {
+        if (!n.read) {
+          n.read = true;
+          changed = true;
+        }
+      });
+      if (changed) {
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        renderNotifications(activeFilter);
+      }
+    }
+    
+    // Filter switching
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filterValue = btn.dataset.filter;
+        renderNotifications(filterValue);
+      });
+    });
+    
+    document.getElementById('markAllBtn').addEventListener('click', markAllAsRead);
+    document.getElementById('backBtn').addEventListener('click', () => {
+       window.location.href = "/../../user/dashboard/";
+    });
+    
+    // Initial render
+    renderNotifications('all');
+  </script>
+</body>
+</html>
